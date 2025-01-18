@@ -1,12 +1,19 @@
-import './App.css'
+import { Outlet } from "react-router-dom";
+import "./App.css";
+import Navbar from "./Layout/Navbar";
+import Footer from "./Layout/Footer";
+import "animate.css";
+import { Toaster } from "react-hot-toast";
 
 function App() {
-
   return (
     <>
-      <h1>hello world</h1>
+      <Toaster position="top-center" reverseOrder={false} />
+      <Navbar></Navbar>
+      <Outlet></Outlet>
+      <Footer></Footer>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
