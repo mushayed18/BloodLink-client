@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { useContext, useState } from "react";
-import logo from "../../public/logo.png";
+import logo from "../../src/Logo/logo.png";
 import { AuthContext } from "../Providers/AuthProvider";
 
 const Navbar = () => {
@@ -50,7 +50,7 @@ const Navbar = () => {
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <div className="w-10 rounded-full">
+                <div className="w-10 rounded-full border-2">
                   <img
                     alt="user"
                     src={user?.photoURL}

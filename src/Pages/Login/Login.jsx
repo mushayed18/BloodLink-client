@@ -1,5 +1,4 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import { useContext, useState } from "react";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa6";
@@ -29,43 +28,20 @@ const Login = () => {
       setUser(result.user);
       toast.success("Login successful!", {
         style: {
-          background: "#0EA5E9",
-          color: "#FFFFFF",
+          background: "white",
+          color: "black",
         },
       });
       navigate("/");
     } catch (error) {
       toast.error("There is an error. Please try again!", {
         style: {
-          background: "#0EA5E9",
-          color: "#FFFFFF",
+          background: "white",
+          color: "black",
         },
       });
     } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGoogleBtn = async () => {
-    try {
-      setLoading(true);
-      const result = await signInWithGoogle();
-      setUser(result.user);
-      toast.success("Login successful!", {
-        style: {
-          background: "#0EA5E9",
-          color: "#FFFFFF",
-        },
-      });
-      navigate("/");
-    } catch (error) {
-      toast.error("There is an error. Please try again!", {
-        style: {
-          background: "#0EA5E9",
-          color: "#FFFFFF",
-        },
-      });
-    } finally {
+      e.target.reset();
       setLoading(false);
     }
   };
@@ -127,17 +103,6 @@ const Login = () => {
             ) : (
               "Login"
             )}
-          </button>
-
-          <div className="divider divider-vertical">OR</div>
-          <button
-            type="button"
-            onClick={handleGoogleBtn}
-            className={`btn btn-sm w-full border border-black rounded-none ${
-              loading ? "cursor-not-allowed" : "hover:text-white"
-            }`}
-          >
-            Login with Google <FcGoogle size={20} />
           </button>
         </form>
         <p className="mt-4 text-sm text-center">

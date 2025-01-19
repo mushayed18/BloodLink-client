@@ -1,91 +1,154 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import { useContext, useState } from "react";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../Providers/AuthProvider";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Register = () => {
-  const { createUser, updateUserProfile, setUser, signInWithGoogle } =
-    useContext(AuthContext);
+  const { createUser, updateUserProfile, setUser } = useContext(AuthContext);
 
   const [visibility, setVisibility] = useState(false);
   const [valid, setValid] = useState("");
   const [localLoading, setLocalLoading] = useState(false);
-
+  const [upazilas, setUpazilas] = useState([]);
   const navigate = useNavigate();
+
+  const axiosPublic = useAxiosPublic();
+
+  const { data: districts = [] } = useQuery({
+    queryKey: ["districts"],
+    queryFn: async () => {
+      const response = await axios.get("/districts.json");
+      return response.data[2]?.data || [];
+    },
+  });
+
+  const { data: upazilaData = [] } = useQuery({
+    queryKey: ["upazilas"],
+    queryFn: async () => {
+      const response = await axios.get("/upazilas.json");
+      return response.data[2]?.data || [];
+    },
+  });
 
   const handleToggle = () => {
     setVisibility(!visibility);
   };
 
+  const handleDistrictChange = (e) => {
+    const selectedDistrictId = e.target.value;
+    const filteredUpazilas = upazilaData.filter(
+      (u) => u.district_id === selectedDistrictId
+    );
+    setUpazilas(filteredUpazilas);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const form = e.target;
 
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const photo = e.target.photo.value;
-    const password = e.target.password.value;
+    const name = form.name.value;
+    const email = form.email.value;
+    const photoFile = form.photo.files[0];
+    const bloodGroup = form.bloodGroup.value;
+    const district = form.district.value;
+    const upazila = form.upazila.value;
+    const password = form.password.value;
+    const confirmPassword = form.confirmPassword.value;
+
+    if (!photoFile) {
+      toast.error("Please upload a photo!");
+      return;
+    }
+
+    // Check if the uploaded file is an image
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+    if (!allowedTypes.includes(photoFile.type)) {
+      toast.error("Only image files (JPEG, PNG, GIF, WebP) are allowed!");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match!");
+      return;
+    }
 
     const regex = /^(?=.*[A-Z])(?=.*[a-z]).{6,}$/;
     if (!regex.test(password)) {
       setValid(
-        "Password must be at least 6 characters long, include at least one uppercase letter, and one lowercase letter"
+        "Password must be at least 6 characters long, include at least one uppercase letter, and one lowercase letter."
       );
       return;
     }
 
     try {
       setLocalLoading(true);
+
+      // Upload the photo to ImgBB
+      const photoData = new FormData();
+      photoData.append("image", photoFile);
+      const uploadResponse = await axiosPublic.post(
+        image_hosting_api,
+        photoData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      const photoURL = uploadResponse.data.data.url;
+
+      // Create user with email and password
       const result = await createUser(email, password);
       const newUser = result.user;
 
+      // Update the user's profile with the name and photo URL
       await updateUserProfile({
         displayName: name,
-        photoURL: photo,
+        photoURL: photoURL,
       });
 
       setUser(newUser);
-      toast.success("User has been created successfully!", {
-        style: {
-          background: "#0EA5E9",
-          color: "#FFFFFF",
-        },
-      });
-      navigate("/");
-    } catch (error) {
-      toast.error("There is an error, please try again!", {
-        style: {
-          background: "#0EA5E9",
-          color: "#FFFFFF",
-        },
-      });
-    } finally {
-      setLocalLoading(false);
-    }
-  };
 
-  const handleGoogleBtn = async () => {
-    try {
-      setLocalLoading(true);
-      const result = await signInWithGoogle();
-      setUser(result.user);
+      const userData = {
+        name,
+        email,
+        photo: photoURL,
+        bloodGroup,
+        district,
+        upazila,
+        role: "donor",
+        status: "active",
+      };
+
+      // send the user to the database
+      await axiosPublic.post("/register", userData);
+
       toast.success("User has been created successfully!", {
         style: {
-          background: "#0EA5E9",
-          color: "#FFFFFF",
+          background: "white",
+          color: "black",
         },
       });
+
       navigate("/");
     } catch (error) {
-      toast.error("There is an error, please try again!", {
+      toast.error("There was an error, please try again!", {
         style: {
-          background: "#0EA5E9",
-          color: "#FFFFFF",
+          background: "white",
+          color: "black",
         },
       });
     } finally {
+      e.target.reset();
       setLocalLoading(false);
     }
   };
@@ -120,14 +183,66 @@ const Register = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Photo URL</label>
+            <label className="block text-sm font-medium">Photo</label>
             <input
               name="photo"
-              type="text"
-              placeholder="Choose a photo URL"
+              type="file"
+              placeholder="Choose a photo"
               className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-red-700"
               required
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium">Blood Group</label>
+            <select
+              name="bloodGroup"
+              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-red-700"
+              required
+            >
+              <option value="">Select Blood Group</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium">District</label>
+            <select
+              name="district"
+              onChange={handleDistrictChange}
+              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-red-700"
+              required
+            >
+              <option value="">Select District</option>
+              {districts.map((district) => (
+                <option key={district.id} value={district.id}>
+                  {district.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium">Upazila</label>
+            <select
+              name="upazila"
+              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-red-700"
+              required
+            >
+              <option value="">Select Upazila</option>
+              {upazilas.map((upazila) => (
+                <option key={upazila.id} value={upazila.name}>
+                  {upazila.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="relative">
@@ -139,7 +254,6 @@ const Register = () => {
               className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-red-700"
               required
             />
-            {valid && <p className="text-red-700 text-sm my-2">{valid}</p>}
             <button
               type="button"
               onClick={handleToggle}
@@ -153,7 +267,25 @@ const Register = () => {
             </button>
           </div>
 
-          <button type="submit" className="rounded-none btn btn-sm text-white bg-red-700 hover:bg-red-900 w-full">
+          <div>
+            <label className="block text-sm font-medium">
+              Confirm Password
+            </label>
+            <input
+              name="confirmPassword"
+              type="password"
+              placeholder="Confirm your password"
+              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-red-700"
+              required
+            />
+          </div>
+
+          {valid && <div className="mt-2 text-red-700">{valid}</div>}
+
+          <button
+            type="submit"
+            className="rounded-none btn btn-sm text-white bg-red-700 hover:bg-red-900 w-full"
+          >
             {localLoading ? (
               <span className="flex items-center justify-center text-white cursor-not-allowed">
                 Wait a moment...
@@ -162,16 +294,6 @@ const Register = () => {
             ) : (
               "Register"
             )}
-          </button>
-          <div className="divider divider-vertical">OR</div>
-          <button
-            type="button"
-            onClick={handleGoogleBtn}
-            className={`btn btn-sm w-full rounded-none border border-black ${
-              localLoading ? "cursor-not-allowed" : "hover:text-white"
-            }`}
-          >
-            Sign up with Google <FcGoogle size={20} />
           </button>
         </form>
         <p className="mt-4 text-sm text-center">

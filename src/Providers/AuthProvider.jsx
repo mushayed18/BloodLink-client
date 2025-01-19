@@ -21,6 +21,9 @@ import {
     const [loading, setLoading] = useState(true);
   
     const [gmailAddress, setGmailAddress] = useState("");
+
+    console.log(user);
+    
   
     const createUser = (email, password) => {
       setLoading(true);
