@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { useContext, useState } from "react";
@@ -20,6 +20,7 @@ const Navbar = () => {
       <NavLink to="/">Home</NavLink>
       <NavLink to="/">Donation Requests</NavLink>
       <NavLink to="/">Blog</NavLink>
+      {user && <NavLink to="/">Funding links</NavLink>}
     </>
   );
 
@@ -62,12 +63,17 @@ const Navbar = () => {
                 tabIndex={0}
                 className="menu menu-sm dropdown-content rounded-lg z-[1]"
               >
-                <button
-                  onClick={signOutUser}
-                  className="btn bg-sky-500 text-black hover:bg-sky-300"
-                >
-                  logout
-                </button>
+                <div className="p-2 bg-slate-300">
+                  <span className="font-bold hover:text-red-900">
+                    <Link>Dashboard</Link>
+                  </span>
+                  <button
+                    onClick={signOutUser}
+                    className="mt-3 rounded-none btn btn-sm bg-red-900 text-white hover:bg-red-900"
+                  >
+                    logout
+                  </button>
+                </div>
               </ul>
             </div>
           </div>
@@ -75,7 +81,7 @@ const Navbar = () => {
           <div className="flex gap-2 items-center">
             <button
               onClick={handleLogin}
-              className="btn btn-sm rounded-none bg-red-700 text-white hover:bg-red-300"
+              className="btn btn-sm rounded-none bg-red-900 text-white hover:bg-red-300"
             >
               Login
             </button>

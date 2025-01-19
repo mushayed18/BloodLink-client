@@ -1,8 +1,9 @@
+import SwiperLayout from "./SwiperLayout";
 
 const Home = () => {
     return (
         <div className="min-h-screen">
-            Home page
+            <SwiperLayout></SwiperLayout>
         </div>
     );
 };

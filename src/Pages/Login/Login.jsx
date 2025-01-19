@@ -48,7 +48,7 @@ const Login = () => {
 
   return (
     <div className="mt-8 animate__animated animate__fadeInDown flex flex-col md:flex-row justify-center w-11/12 mx-auto">
-      <div className="bg-gradient-to-r from-red-700 to-red-900 md:w-2/5 lg:w-1/4 mt-28 md:mb-16 md:rounded-l-lg flex items-center justify-center">
+      <div className="bg-gradient-to-r from-red-900 to-red-700 md:w-2/5 lg:w-1/4 mt-28 md:mb-16 md:rounded-l-lg flex items-center justify-center">
         <h1 className="text-3xl font-bold text-white py-4">Login now!</h1>
       </div>
       <div className="md:w-2/5 lg:w-1/4 p-6 md:rounded-r-lg shadow-2xl md:mt-28 mb-16 backdrop-blur-2xl dark:bg-white/30 bg-slate-200">
@@ -60,7 +60,7 @@ const Login = () => {
               type="email"
               id="email"
               placeholder="Enter your email"
-              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-red-700"
+              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-red-900"
               required
             />
           </div>
@@ -72,7 +72,7 @@ const Login = () => {
               type={visibility ? "text" : "password"}
               id="password"
               placeholder="Enter your password"
-              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-red-700"
+              className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-red-900"
               required
             />
 
@@ -91,8 +91,10 @@ const Login = () => {
 
           <button
             type="submit"
-            className={`btn btn-sm w-full bg-red-700 text-white border border-black rounded-none ${
-              loading ? "cursor-not-allowed" : "hover:bg-red-900 hover:text-white"
+            className={`btn btn-sm w-full bg-red-900 text-white border border-black rounded-none ${
+              loading
+                ? "cursor-not-allowed"
+                : "hover:bg-red-900 hover:text-white"
             }`}
           >
             {loading ? (
@@ -107,7 +109,7 @@ const Login = () => {
         </form>
         <p className="mt-4 text-sm text-center">
           New to this website?{" "}
-          <NavLink to="/register" className="text-red-700">
+          <NavLink to="/register" className="text-red-900">
             Register here
           </NavLink>
         </p>
