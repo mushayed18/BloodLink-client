@@ -65,7 +65,7 @@ const Navbar = () => {
               >
                 <div className="p-2 bg-slate-300">
                   <span className="font-bold hover:text-red-900">
-                    <Link>Dashboard</Link>
+                    <Link to={'/dashboard/profile'}>Dashboard</Link>
                   </span>
                   <button
                     onClick={signOutUser}

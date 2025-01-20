@@ -58,7 +58,7 @@ const Register = () => {
     const email = form.email.value;
     const photoFile = form.photo.files[0];
     const bloodGroup = form.bloodGroup.value;
-    const district = form.district.value;
+    const districtId = form.district.value;
     const upazila = form.upazila.value;
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
@@ -85,6 +85,16 @@ const Register = () => {
       setValid(
         "Password must be at least 6 characters long, include at least one uppercase letter, and one lowercase letter."
       );
+      return;
+    }
+
+    const districtObject = districts.find(
+      (district) => district.id === districtId
+    );
+    const districtName = districtObject ? districtObject.name : "";
+
+    if (!districtName) {
+      toast.error("Invalid district selected!");
       return;
     }
 
@@ -123,7 +133,7 @@ const Register = () => {
         email,
         photo: photoURL,
         bloodGroup,
-        district,
+        district: districtName,
         upazila,
         role: "donor",
         status: "active",
