@@ -23,17 +23,41 @@ const Dashboard = () => {
           Dashboard
         </div>
         <nav className="mt-4">
-          <ul className="space-y-2">
+          <ul className="space-y-0">
+            <li>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  `block px-4 py-2 hover:bg-red-700 text-white ${
+                    isActive ? "bg-red-950" : ""
+                  }`
+                }
+              >
+                Dashboard Home
+              </NavLink>
+            </li>
             <li>
               <NavLink
                 to="/dashboard/profile"
                 className={({ isActive }) =>
-                  `block px-4 py-2 hover:bg-gray-500 text-white ${
-                    isActive ? "bg-gray-700" : ""
+                  `block px-4 py-2 hover:bg-red-700 text-white ${
+                    isActive ? "bg-red-900" : ""
                   }`
                 }
               >
                 Profile
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/dashboard/create-donation-request"
+                className={({ isActive }) =>
+                  `block px-4 py-2 hover:bg-red-700 text-white ${
+                    isActive ? "bg-red-900" : ""
+                  }`
+                }
+              >
+                Create Donation Request
               </NavLink>
             </li>
             {/* Add more dashboard links here */}
