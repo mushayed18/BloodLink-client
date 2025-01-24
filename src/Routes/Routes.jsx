@@ -9,6 +9,9 @@ import PrivateRoute from "./PrivateRoute";
 import DashboardWrapper from "../Pages/Dashboard/DashboardWrapper/DashboardWrapper";
 import CreateDonationRequest from "../Pages/Dashboard/DonorDashboard/CreateDonationRequest";
 import PrivateDonor from "./PrivateDonor";
+import MyDonationRequests from "../Pages/Dashboard/DonorDashboard/MyDonationRequests";
+import ViewDonationRequest from "../Pages/Dashboard/DonorDashboard/ViewDonationRequest";
+import EditDonationRequest from "../Pages/Dashboard/DonorDashboard/EditDonationRequest";
 
 export const router = createBrowserRouter([
   {
@@ -44,7 +47,19 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/create-donation-request",
         element: <PrivateRoute><PrivateDonor><CreateDonationRequest></CreateDonationRequest></PrivateDonor></PrivateRoute>,
-      }
+      },
+      {
+        path: "/dashboard/my-donation-requests",
+        element: <PrivateRoute><PrivateDonor><MyDonationRequests /></PrivateDonor></PrivateRoute>
+      },
+      {
+        path: "/dashboard/view-my-donation-request/:id",
+        element: <PrivateRoute><ViewDonationRequest></ViewDonationRequest></PrivateRoute>
+      },
+      {
+        path: "/dashboard/edit-my-donation-request/:id",
+        element: <PrivateRoute><EditDonationRequest></EditDonationRequest></PrivateRoute>
+      },
     ]
   }
 ]);
