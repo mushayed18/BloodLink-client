@@ -82,41 +82,41 @@ const DonorDashboard = ({ userInfo }) => {
   }
 
   return (
-    <div className="p-6 lg:ml-64">
+    <div className="md:p-6 lg:ml-64 flex flex-col items-center">
       <h1 className="text-3xl font-bold mb-6">Welcome, {userInfo.name}!</h1>
 
       {recentDonations && recentDonations.length > 0 && (
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold mb-4">
+        <div className="mb-6 flex flex-col items-center">
+          <h2 className="text-2xl font-semibold mb-4 text-center">
             Your Recent Donation Requests
           </h2>
-          <div className="overflow-x-auto">
-            <table className="text-center table bg-white border border-gray-300">
+          <div className="overflow-x-auto w-[340px] md:w-auto">
+            <table className="text-center w-full table-auto border-collapse bg-white border border-gray-300">
               <thead>
                 <tr className="bg-gray-100">
-                  <th>Recipient Name</th>
-                  <th>Location</th>
-                  <th>Date & Time</th>
-                  <th>Blood Group</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+                  <th className="py-2 px-4 border-b">Recipient Name</th>
+                  <th className="py-2 px-4 border-b">Location</th>
+                  <th className="py-2 px-4 border-b">Date & Time</th>
+                  <th className="py-2 px-4 border-b">Blood Group</th>
+                  <th className="py-2 px-4 border-b">Status</th>
+                  <th className="py-2 px-4 border-b">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {recentDonations.slice(0, 3).map((donation) => (
                   <tr key={donation._id}>
-                    <td>
+                    <td className="py-2 px-4 border-b">
                       {donation.recipientName}
                     </td>
-                    <td>{`${donation.recipientDistrict}, ${donation.recipientUpazila}`}</td>
-                    <td>
+                    <td className="py-2 px-4 border-b">{`${donation.recipientDistrict}, ${donation.recipientUpazila}`}</td>
+                    <td className="py-2 px-4 border-b">
                       {formatDate(donation.donationDate)} at{" "}
                       {donation.donationTime}
                     </td>
-                    <td>
+                    <td className="py-2 px-4 border-b">
                       {donation.bloodGroup}
                     </td>
-                    <td>
+                    <td className="py-2 px-4 border-b">
                       {donation.donationStatus}
                       {donation.donationStatus === "inprogress" && (
                         <div className="mt-2 flex">
@@ -139,7 +139,7 @@ const DonorDashboard = ({ userInfo }) => {
                         </div>
                       )}
                     </td>
-                    <td className="flex flex-col gap-2">
+                    <td className="flex flex-col gap-2 py-2 px-4 border-b">
                       <Link
                         to={`/dashboard/edit-my-donation-request/${donation._id}`}
                         className="bg-blue-500 text-white px-2 py-1 rounded mr-2 text-center"

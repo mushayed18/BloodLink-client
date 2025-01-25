@@ -32,6 +32,7 @@ const CreateDonationRequest = ({ userInfo }) => {
     donationDate: "",
     donationTime: "",
     requestMessage: "",
+    requesterImage: userInfo.photo,
   });
 
   const handleDistrictChange = (e) => {
@@ -44,7 +45,7 @@ const CreateDonationRequest = ({ userInfo }) => {
     setFormData({
       ...formData,
       recipientDistrict: selectedDistrictId,
-      recipientUpazila: "", 
+      recipientUpazila: "",
     });
   };
 
@@ -58,10 +59,17 @@ const CreateDonationRequest = ({ userInfo }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Find the district name based on the selected ID
+    const selectedDistrict = districts.find(
+      (district) => district.id === formData.recipientDistrict
+    );
+
     const requestData = {
       requesterName: userInfo.name,
       requesterEmail: userInfo.email,
       ...formData,
+      recipientDistrict: selectedDistrict?.name || "", // Use the name, fallback to empty if not found
       donationStatus: "pending",
     };
 
@@ -92,7 +100,9 @@ const CreateDonationRequest = ({ userInfo }) => {
 
   return (
     <div className="lg:ml-64 p-6 bg-white shadow-md rounded-md">
-      <h1 className="font-bold text-4xl py-10 text-center">Create Donation Request</h1>
+      <h1 className="font-bold text-4xl py-10 text-center">
+        Create Donation Request
+      </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium">Requester Name</label>

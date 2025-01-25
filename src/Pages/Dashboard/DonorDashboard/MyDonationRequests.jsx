@@ -92,7 +92,7 @@ const MyDonationRequests = () => {
   const { requests = [], totalPages = 1 } = data || {};
 
   return (
-    <div className="lg:ml-64 p-6">
+    <div className="lg:ml-64 lg:p-6 flex flex-col items-center">
       <h1 className="text-3xl font-bold mb-6">My Donation Requests</h1>
 
       {/* Filter */}
@@ -117,7 +117,7 @@ const MyDonationRequests = () => {
         </select>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto w-[340px] md:w-auto">
         <table className="w-full table-auto border-collapse bg-white border border-gray-300">
           <thead>
             <tr className="bg-gray-100">

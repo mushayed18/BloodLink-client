@@ -12,6 +12,8 @@ import PrivateDonor from "./PrivateDonor";
 import MyDonationRequests from "../Pages/Dashboard/DonorDashboard/MyDonationRequests";
 import ViewDonationRequest from "../Pages/Dashboard/DonorDashboard/ViewDonationRequest";
 import EditDonationRequest from "../Pages/Dashboard/DonorDashboard/EditDonationRequest";
+import DonationRequests from "../Pages/DonationRequests/DonationRequests";
+import DonationRequestDetails from "../Pages/DonationRequests/DonationRequestDetails";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/blood-donation-requests",
+        element: <DonationRequests></DonationRequests>,
+      },
+      {
+        path: "/donation-request-details/:id",
+        element: <DonationRequestDetails></DonationRequestDetails>,
       },
     ],
   },
