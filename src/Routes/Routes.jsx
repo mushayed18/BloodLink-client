@@ -15,6 +15,9 @@ import EditDonationRequest from "../Pages/Dashboard/DonorDashboard/EditDonationR
 import DonationRequests from "../Pages/DonationRequests/DonationRequests";
 import DonationRequestDetails from "../Pages/DonationRequests/DonationRequestDetails";
 import SearchDonor from "../Pages/SearchDonor/SearchDonor";
+import PrivateAdmin from "./PrivateAdmin";
+import AllUsers from "../Pages/Dashboard/AdminDashboard/AllUsers";
+import PrivateSign from "./PrivateSign";
 
 export const router = createBrowserRouter([
   {
@@ -27,11 +30,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login></Login>,
+        element: <PrivateSign><Login></Login></PrivateSign>,
       },
       {
         path: "/register",
-        element: <Register></Register>,
+        element: <PrivateSign><Register></Register></PrivateSign>,
       },
       {
         path: "/blood-donation-requests",
@@ -74,6 +77,12 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/edit-my-donation-request/:id",
         element: <PrivateRoute><EditDonationRequest></EditDonationRequest></PrivateRoute>
+      },
+
+      // admin related routes
+      {
+        path: "/dashboard/all-users",
+        element: <PrivateRoute><PrivateAdmin><AllUsers></AllUsers></PrivateAdmin></PrivateRoute>
       },
     ]
   }
