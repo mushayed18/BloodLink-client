@@ -18,19 +18,19 @@ const DonorDashboard = ({ userInfo }) => {
       const response = await axios.get(
         `http://localhost:5000/donation-requests/${userInfo.email}`
       );
-      return response.data;
+      return response.data.requests;
     },
   });
 
   const handleStatusChange = async (requestId, newStatus) => {
     try {
       await axios.patch(
-        `http://localhost:5000/donation-requests/${requestId}/status`, // Use PATCH instead of PUT
+        `http://localhost:5000/donation-requests/${requestId}/status`, 
         {
-          status: newStatus, // Pass status as 'status' key, which is expected in backend
+          status: newStatus, 
         }
       );
-      refetch(); // Refetch the data after updating
+      refetch(); 
     } catch (error) {
       console.error("Error updating status:", error);
     }

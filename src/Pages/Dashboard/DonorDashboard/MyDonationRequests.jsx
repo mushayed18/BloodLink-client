@@ -1,69 +1,114 @@
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
-import { useState, useContext } from "react"
-import { Link } from "react-router-dom"
-import { AuthContext } from "../../../Providers/AuthProvider"
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import Swal from "sweetalert2";
+import Loading from "../../../Components/Loading";
 
 const MyDonationRequests = () => {
-  const { user } = useContext(AuthContext)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage] = useState(10)
-  const [filter, setFilter] = useState("all")
+  const { user } = useContext(AuthContext);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+  const [filter, setFilter] = useState("all");
 
-  const {
-    data: donationRequests,
-    isLoading,
-    refetch,
-  } = useQuery({
+  // Fetch donation requests
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["donationRequests", user.email, currentPage, filter],
     queryFn: async () => {
-      const response = await axios.get(`http://localhost:5000/donation-requests/${user.email}`, {
-        params: { page: currentPage, limit: itemsPerPage, filter },
-      })
-      return response.data
+      const response = await axios.get(
+        `http://localhost:5000/donation-requests/${user.email}`,
+        {
+          params: {
+            page: currentPage,
+            limit: itemsPerPage,
+            filter: filter === "all" ? undefined : filter, 
+          },
+        }
+      );
+      return response.data; 
     },
-  })
+    keepPreviousData: true, 
+  });
 
   const handleStatusChange = async (requestId, newStatus) => {
-    // try {
-    //   await axios.patch(`http://localhost:5000/donation-requests/${requestId}`, { status: newStatus })
-    //   refetch()
-    // } catch (error) {
-    //   console.error("Error updating status:", error)
-    // }
-  }
+    try {
+      await axios.patch(
+        `http://localhost:5000/donation-requests/${requestId}/status`,
+        { status: newStatus }
+      );
+      refetch(); // Refetch the data after updating
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
 
   const handleDelete = async (requestId) => {
-    // if (window.confirm("Are you sure you want to delete this donation request?")) {
-    //   try {
-    //     await axios.delete(`http://localhost:5000/donation-requests/${requestId}`)
-    //     refetch()
-    //   } catch (error) {
-    //     console.error("Error deleting request:", error)
-    //   }
-    // }
-  }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(
+            `http://localhost:5000/donation-requests/${requestId}`
+          );
+          Swal.fire(
+            "Deleted!",
+            "Your donation request has been deleted.",
+            "success"
+          );
+          refetch(); // Refresh the data
+        } catch (error) {
+          Swal.fire(
+            "Error!",
+            "Failed to delete donation request. Try again later.",
+            "error"
+          );
+        }
+      }
+    });
+  };
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
-  }
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loading />;
   }
 
-  const totalPages = Math.ceil(donationRequests.total / itemsPerPage)
+  // Handle undefined data
+  const { requests = [], totalPages = 1 } = data || {};
 
   return (
     <div className="lg:ml-64 p-6">
       <h1 className="text-3xl font-bold mb-6">My Donation Requests</h1>
 
+      {/* Filter */}
       <div className="mb-4">
         <label htmlFor="filter" className="mr-2">
           Filter by status:
         </label>
-        <select id="filter" value={filter} onChange={(e) => setFilter(e.target.value)} className="border rounded p-1">
+        <select
+          id="filter"
+          value={filter}
+          onChange={(e) => {
+            setFilter(e.target.value);
+            setCurrentPage(1); 
+          }}
+          className="border rounded p-1"
+        >
           <option value="all">All</option>
           <option value="pending">Pending</option>
           <option value="inprogress">In Progress</option>
@@ -85,59 +130,68 @@ const MyDonationRequests = () => {
             </tr>
           </thead>
           <tbody className="text-center">
-            {donationRequests.map((donation) => (
-              <tr key={donation._id}>
-                <td className="py-2 px-4 border-b">{donation.recipientName}</td>
-                <td className="py-2 px-4 border-b">{`${donation.recipientDistrict}, ${donation.recipientUpazila}`}</td>
-                <td className="py-2 px-4 border-b">
-                  {formatDate(donation.donationDate)} at {donation.donationTime}
-                </td>
-                <td className="py-2 px-4 border-b">{donation.bloodGroup}</td>
-                <td className="py-2 px-4 border-b">
-                  {donation.donationStatus}
-                  {donation.donationStatus === "inprogress" && (
-                    <div className="mt-2 flex">
-                      <button
-                        onClick={() => handleStatusChange(donation._id, "done")}
-                        className="bg-green-500 text-white px-2 py-1 rounded mr-2"
-                      >
-                        Done
-                      </button>
-                      <button
-                        onClick={() => handleStatusChange(donation._id, "canceled")}
-                        className="bg-red-500 text-white px-2 py-1 rounded"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  )}
-                </td>
-                <td className="py-2 px-2 border-b">
-                  <Link
-                    to={``}
-                    className="bg-blue-500 text-white px-2 py-1 rounded mr-2"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(donation._id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded mr-2"
-                  >
-                    Delete
-                  </button>
-                  <Link
-                    to={``}
-                    className="bg-green-500 text-white px-2 py-1 rounded"
-                  >
-                    View
-                  </Link>
+            {requests.length > 0 ? (
+              requests.map((donation) => (
+                <tr key={donation._id}>
+                  <td className="py-2 px-4 border-b">{donation.recipientName}</td>
+                  <td className="py-2 px-4 border-b">{`${donation.recipientDistrict}, ${donation.recipientUpazila}`}</td>
+                  <td className="py-2 px-4 border-b">
+                    {formatDate(donation.donationDate)} at {donation.donationTime}
+                  </td>
+                  <td className="py-2 px-4 border-b">{donation.bloodGroup}</td>
+                  <td className="py-2 px-4 border-b">
+                    {donation.donationStatus}
+                    {donation.donationStatus === "inprogress" && (
+                      <div className="mt-2 flex">
+                        <button
+                          onClick={() => handleStatusChange(donation._id, "done")}
+                          className="bg-green-500 text-white px-2 py-1 rounded mr-2"
+                        >
+                          Done
+                        </button>
+                        <button
+                          onClick={() => handleStatusChange(donation._id, "canceled")}
+                          className="bg-red-500 text-white px-2 py-1 rounded"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    )}
+                  </td>
+                  <td className="py-2 px-2 border-b flex flex-col gap-2">
+                    <Link
+                      to={`/dashboard/edit-my-donation-request/${donation._id}`}
+                      className="bg-blue-500 text-white px-2 py-1 rounded mr-2"
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(donation._id)}
+                      className="bg-red-500 text-white px-2 py-1 rounded mr-2"
+                    >
+                      Delete
+                    </button>
+                    <Link
+                      to={`/dashboard/view-my-donation-request/${donation._id}`}
+                      className="bg-green-500 text-white px-2 py-1 rounded mr-2"
+                    >
+                      View
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="py-4">
+                  No donation requests found.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
 
+      {/* Pagination */}
       {totalPages > 1 && (
         <div className="mt-4 flex justify-center">
           {[...Array(totalPages)].map((_, index) => (
@@ -145,7 +199,9 @@ const MyDonationRequests = () => {
               key={index}
               onClick={() => setCurrentPage(index + 1)}
               className={`mx-1 px-3 py-1 rounded ${
-                currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
+                currentPage === index + 1
+                  ? "bg-red-900 text-white"
+                  : "bg-gray-200"
               }`}
             >
               {index + 1}
@@ -154,8 +210,7 @@ const MyDonationRequests = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MyDonationRequests
-
+export default MyDonationRequests;
