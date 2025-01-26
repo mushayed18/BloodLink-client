@@ -1,18 +1,17 @@
-import React, { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Menu } from "@headlessui/react";
 import Loading from "../../../Components/Loading";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const AllUsers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filterStatus, setFilterStatus] = useState("");
 
-  const queryClient = useQueryClient();
-
   // Fetch all users
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["users", { page: currentPage, status: filterStatus }],
     queryFn: async () => {
       const response = await axios.get("http://localhost:5000/users", {
@@ -22,26 +21,25 @@ const AllUsers = () => {
     },
   });
 
-  // Mutation to update user role or status
-  const mutation = useMutation({
-    mutationFn: async ({ userId, updates }) => {
-      return axios.put(`http://localhost:5000/users/${userId}`, updates);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["users"]);
-    },
-  });
-
-  const handleAction = (userId, updates) => {
-    mutation.mutate({ userId, updates });
+  // Handle updating user role or status
+  const handleAction = async (userId, updates) => {
+    try {
+      console.log("Updating user:", userId, updates);
+      const response = await axios.put(`http://localhost:5000/user/${userId}`, updates);
+      if (response.data.success) {
+        toast.success("User updated successfully!");
+        refetch(); 
+      } else {
+        toast.error("Failed to update user! Please try again");
+      }
+    } catch (error) {
+      toast.error("Failed to update user! Please try again");
+    }
   };
 
   if (isLoading) {
-    return <Loading></Loading>;
+    return <Loading />;
   }
-
-  console.log(filterStatus);
-  
 
   return (
     <div className="min-h-screen lg:ml-64 flex flex-col mt-8">
@@ -154,6 +152,22 @@ const AllUsers = () => {
                               }
                             >
                               Make Admin
+                            </button>
+                          )}
+                        </Menu.Item>
+                      )}
+                      {user.role !== "donor" && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              className={`block px-4 py-2 text-sm w-full text-left ${
+                                active ? "bg-gray-100" : ""
+                              }`}
+                              onClick={() =>
+                                handleAction(user._id, { role: "donor" })
+                              }
+                            >
+                              Make Donor
                             </button>
                           )}
                         </Menu.Item>
