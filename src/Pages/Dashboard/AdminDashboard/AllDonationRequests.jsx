@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import Loading from "../../../Components/Loading";
 import toast from "react-hot-toast";
 
-const MyDonationRequests = () => {
+const AllDonationRequests = () => {
   const { user } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -18,7 +18,7 @@ const MyDonationRequests = () => {
     queryKey: ["donationRequests", user.email, currentPage, filter],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/donation-requests/${user.email}`,
+        `http://localhost:5000/all-donation-requests`,
         {
           params: {
             page: currentPage,
@@ -95,7 +95,7 @@ const MyDonationRequests = () => {
 
   return (
     <div className="lg:ml-64 lg:p-6 flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-6">My Donation Requests</h1>
+      <h1 className="text-3xl font-bold mb-6">All Donation Requests</h1>
 
       {/* Filter */}
       <div className="mb-4">
@@ -215,4 +215,4 @@ const MyDonationRequests = () => {
   );
 };
 
-export default MyDonationRequests;
+export default AllDonationRequests;

@@ -18,6 +18,7 @@ import SearchDonor from "../Pages/SearchDonor/SearchDonor";
 import PrivateAdmin from "./PrivateAdmin";
 import AllUsers from "../Pages/Dashboard/AdminDashboard/AllUsers";
 import PrivateSign from "./PrivateSign";
+import AllDonationRequests from "../Pages/Dashboard/AdminDashboard/AllDonationRequests";
 
 export const router = createBrowserRouter([
   {
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/all-users",
         element: <PrivateRoute><PrivateAdmin><AllUsers></AllUsers></PrivateAdmin></PrivateRoute>
+      },
+      {
+        path: "/dashboard/all-blood-donation-request",
+        element: <PrivateRoute><PrivateAdmin><AllDonationRequests></AllDonationRequests></PrivateAdmin></PrivateRoute>
       },
     ]
   }

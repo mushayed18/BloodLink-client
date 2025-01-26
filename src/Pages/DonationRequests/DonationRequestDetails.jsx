@@ -38,7 +38,7 @@ const DonationRequestDetails = () => {
       toast.success("You successfully donated!");
       setDonationStatus("inprogress");
       setIsModalOpen(false);
-      navigate("/");
+      navigate("/blood-donation-requests");
     } catch (error) {
       console.error("Error updating donation status:", error);
     }
