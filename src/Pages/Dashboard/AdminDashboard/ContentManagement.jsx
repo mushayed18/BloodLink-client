@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Swal from "sweetalert2";
 
-const ContentManagement = () => {
+const ContentManagement = ({userInfo}) => {
   const [statusFilter, setStatusFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 6;
@@ -100,6 +100,7 @@ const ContentManagement = () => {
           <BlogCard
             key={blog._id}
             blog={blog}
+            userInfo={userInfo}
             onStatusChange={handleStatusChange}
             onDelete={() => handleDelete(blog._id)}
           />

@@ -26,6 +26,7 @@ import BlogDetails from "../Pages/Blog/BlogDetails";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import AllDonationWrapper from "../Pages/Dashboard/AllDonationWrapper/AllDonationWrapper";
 import PrivateVolunteer from "./PrivateVolunteer";
+import PrivateContent from "./PrivateContent";
 
 export const router = createBrowserRouter([
   {
@@ -107,11 +108,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/content-management",
-        element: <PrivateRoute><PrivateAdmin><ContentManagement></ContentManagement></PrivateAdmin></PrivateRoute>
+        element: <PrivateRoute><PrivateContent><ContentManagement></ContentManagement></PrivateContent></PrivateRoute>
       },
       {
         path: "/dashboard/content-management/add-blog",
-        element: <PrivateRoute><PrivateAdmin><AddBlog></AddBlog></PrivateAdmin></PrivateRoute>
+        element: <PrivateRoute><PrivateContent><AddBlog></AddBlog></PrivateContent></PrivateRoute>
       },
 
 
