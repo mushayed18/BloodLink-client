@@ -19,7 +19,7 @@ const Navbar = () => {
     <>
       <NavLink to="/">Home</NavLink>
       <NavLink to="/blood-donation-requests">Donation Requests</NavLink>
-      <NavLink to="/">Blog</NavLink>
+      <NavLink to="/blogs">Blog</NavLink>
       {user && <NavLink to="/">Funding links</NavLink>}
     </>
   );

@@ -21,11 +21,15 @@ import PrivateSign from "./PrivateSign";
 import AllDonationRequests from "../Pages/Dashboard/AdminDashboard/AllDonationRequests";
 import ContentManagement from "../Pages/Dashboard/AdminDashboard/ContentManagement";
 import AddBlog from "../Pages/Dashboard/AdminDashboard/AddBlog";
+import Blog from "../Pages/Blog/Blog";
+import BlogDetails from "../Pages/Blog/BlogDetails";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App></App>,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -50,6 +54,14 @@ export const router = createBrowserRouter([
       {
         path: "/search-donor",
         element: <SearchDonor></SearchDonor>,
+      },
+      {
+        path: "/blogs",
+        element: <Blog></Blog>,
+      },
+      {
+        path: "/blog/:id",
+        element: <BlogDetails></BlogDetails>,
       },
     ],
   },

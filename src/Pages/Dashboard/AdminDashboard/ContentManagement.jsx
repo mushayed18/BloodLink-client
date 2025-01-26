@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 const ContentManagement = () => {
   const [statusFilter, setStatusFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const limit = 5;
+  const limit = 6;
 
   const queryClient = useQueryClient();
 

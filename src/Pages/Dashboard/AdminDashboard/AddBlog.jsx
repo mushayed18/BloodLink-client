@@ -57,6 +57,7 @@ const AddBlog = () => {
       await axios.post("http://localhost:5000/blogs", blogData);
 
       toast.success("Blog created successfully!");
+      navigate('/dashboard/content-management');
     } catch (error) {
       toast.error("Failed to create the blog. Please try again.");
     } finally {
