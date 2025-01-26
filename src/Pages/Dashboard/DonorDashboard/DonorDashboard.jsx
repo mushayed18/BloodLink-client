@@ -4,6 +4,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../../../Components/Loading";
 import Swal from "sweetalert2";
+import { FaRegEdit } from "react-icons/fa";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { GrView } from "react-icons/gr";
 
 const DonorDashboard = ({ userInfo }) => {
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -25,12 +28,12 @@ const DonorDashboard = ({ userInfo }) => {
   const handleStatusChange = async (requestId, newStatus) => {
     try {
       await axios.patch(
-        `http://localhost:5000/donation-requests/${requestId}/status`, 
+        `http://localhost:5000/donation-requests/${requestId}/status`,
         {
-          status: newStatus, 
+          status: newStatus,
         }
       );
-      refetch(); 
+      refetch();
     } catch (error) {
       console.error("Error updating status:", error);
     }
@@ -139,24 +142,24 @@ const DonorDashboard = ({ userInfo }) => {
                         </div>
                       )}
                     </td>
-                    <td className="flex flex-col gap-2 py-2 px-4 border-b">
+                    <td className="flex flex-col items-center gap-2 py-2 px-4 border-b">
                       <Link
                         to={`/dashboard/edit-my-donation-request/${donation._id}`}
-                        className="bg-blue-500 text-white px-2 py-1 rounded mr-2 text-center"
+                        className="text-red-900"
                       >
-                        Edit
+                        <FaRegEdit />
                       </Link>
                       <button
                         onClick={() => handleDelete(donation._id)}
-                        className="bg-red-500 text-white px-2 py-1 rounded mr-2 text-center"
+                        className="text-red-900"
                       >
-                        Delete
+                        <RiDeleteBin6Line />
                       </button>
                       <Link
                         to={`/dashboard/view-my-donation-request/${donation._id}`}
-                        className="bg-green-500 text-white px-2 py-1 rounded mr-2 text-center"
+                        className="text-red-900"
                       >
-                        View
+                        <GrView />
                       </Link>
                     </td>
                   </tr>

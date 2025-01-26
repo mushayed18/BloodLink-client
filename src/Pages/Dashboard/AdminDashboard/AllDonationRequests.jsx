@@ -6,6 +6,9 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import Loading from "../../../Components/Loading";
 import toast from "react-hot-toast";
+import { GrView } from "react-icons/gr";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
 
 const AllDonationRequests = () => {
   const { user } = useContext(AuthContext);
@@ -23,13 +26,13 @@ const AllDonationRequests = () => {
           params: {
             page: currentPage,
             limit: itemsPerPage,
-            filter: filter === "all" ? undefined : filter, 
+            filter: filter === "all" ? undefined : filter,
           },
         }
       );
-      return response.data; 
+      return response.data;
     },
-    keepPreviousData: true, 
+    keepPreviousData: true,
   });
 
   const handleStatusChange = async (requestId, newStatus) => {
@@ -38,8 +41,8 @@ const AllDonationRequests = () => {
         `http://localhost:5000/donation-requests/${requestId}/status`,
         { status: newStatus }
       );
-      toast.success('Donation status has been updated!');
-      refetch(); 
+      toast.success("Donation status has been updated!");
+      refetch();
     } catch (error) {
       console.error("Error updating status:", error);
     }
@@ -65,7 +68,7 @@ const AllDonationRequests = () => {
             "Your donation request has been deleted.",
             "success"
           );
-          refetch(); 
+          refetch();
         } catch (error) {
           Swal.fire(
             "Error!",
@@ -107,7 +110,7 @@ const AllDonationRequests = () => {
           value={filter}
           onChange={(e) => {
             setFilter(e.target.value);
-            setCurrentPage(1); 
+            setCurrentPage(1);
           }}
           className="border rounded p-1"
         >
@@ -135,10 +138,13 @@ const AllDonationRequests = () => {
             {requests.length > 0 ? (
               requests.map((donation) => (
                 <tr key={donation._id}>
-                  <td className="py-2 px-4 border-b">{donation.recipientName}</td>
+                  <td className="py-2 px-4 border-b">
+                    {donation.recipientName}
+                  </td>
                   <td className="py-2 px-4 border-b">{`${donation.recipientDistrict}, ${donation.recipientUpazila}`}</td>
                   <td className="py-2 px-4 border-b">
-                    {formatDate(donation.donationDate)} at {donation.donationTime}
+                    {formatDate(donation.donationDate)} at{" "}
+                    {donation.donationTime}
                   </td>
                   <td className="py-2 px-4 border-b">{donation.bloodGroup}</td>
                   <td className="py-2 px-4 border-b">
@@ -146,13 +152,17 @@ const AllDonationRequests = () => {
                     {donation.donationStatus === "inprogress" && (
                       <div className="mt-2 flex">
                         <button
-                          onClick={() => handleStatusChange(donation._id, "done")}
+                          onClick={() =>
+                            handleStatusChange(donation._id, "done")
+                          }
                           className="bg-green-500 text-white px-2 py-1 rounded mr-2"
                         >
                           Done
                         </button>
                         <button
-                          onClick={() => handleStatusChange(donation._id, "canceled")}
+                          onClick={() =>
+                            handleStatusChange(donation._id, "canceled")
+                          }
                           className="bg-red-500 text-white px-2 py-1 rounded"
                         >
                           Cancel
@@ -160,24 +170,24 @@ const AllDonationRequests = () => {
                       </div>
                     )}
                   </td>
-                  <td className="py-2 px-2 border-b flex flex-col gap-2">
+                  <td className="flex flex-col items-center gap-2 py-2 px-4 border-b">
                     <Link
                       to={`/dashboard/edit-my-donation-request/${donation._id}`}
-                      className="bg-blue-500 text-white px-2 py-1 rounded mr-2"
+                      className="text-red-900"
                     >
-                      Edit
+                      <FaRegEdit />
                     </Link>
                     <button
                       onClick={() => handleDelete(donation._id)}
-                      className="bg-red-500 text-white px-2 py-1 rounded mr-2"
+                      className="text-red-900"
                     >
-                      Delete
+                      <RiDeleteBin6Line />
                     </button>
                     <Link
                       to={`/dashboard/view-my-donation-request/${donation._id}`}
-                      className="bg-green-500 text-white px-2 py-1 rounded mr-2"
+                      className="text-red-900"
                     >
-                      View
+                      <GrView />
                     </Link>
                   </td>
                 </tr>

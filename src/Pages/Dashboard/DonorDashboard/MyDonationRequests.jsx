@@ -6,6 +6,9 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import Loading from "../../../Components/Loading";
 import toast from "react-hot-toast";
+import { FaRegEdit } from "react-icons/fa";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { GrView } from "react-icons/gr";
 
 const MyDonationRequests = () => {
   const { user } = useContext(AuthContext);
@@ -160,24 +163,24 @@ const MyDonationRequests = () => {
                       </div>
                     )}
                   </td>
-                  <td className="py-2 px-2 border-b flex flex-col gap-2">
+                  <td className="py-2 px-2 border-b flex flex-col items-center gap-2">
                     <Link
                       to={`/dashboard/edit-my-donation-request/${donation._id}`}
-                      className="bg-blue-500 text-white px-2 py-1 rounded mr-2"
+                      className="text-red-900"
                     >
-                      Edit
+                      <FaRegEdit />
                     </Link>
                     <button
                       onClick={() => handleDelete(donation._id)}
-                      className="bg-red-500 text-white px-2 py-1 rounded mr-2"
+                      className="text-red-900"
                     >
-                      Delete
+                      <RiDeleteBin6Line />
                     </button>
                     <Link
                       to={`/dashboard/view-my-donation-request/${donation._id}`}
-                      className="bg-green-500 text-white px-2 py-1 rounded mr-2"
+                      className="text-red-900"
                     >
-                      View
+                      <GrView />
                     </Link>
                   </td>
                 </tr>
