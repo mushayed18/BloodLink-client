@@ -1,16 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
-import Loading from "../../../Components/Loading";
 import toast from "react-hot-toast";
-import { GrView } from "react-icons/gr";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { FaRegEdit } from "react-icons/fa";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import Loading from "../../../Components/Loading";
 
-const AllDonationRequests = () => {
+const AllDonationRequestsVolunteer = () => {
   const { user } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -48,38 +44,6 @@ const AllDonationRequests = () => {
     }
   };
 
-  const handleDelete = async (requestId) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "This action cannot be undone!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        try {
-          await axios.delete(
-            `http://localhost:5000/donation-requests/${requestId}`
-          );
-          Swal.fire(
-            "Deleted!",
-            "Your donation request has been deleted.",
-            "success"
-          );
-          refetch();
-        } catch (error) {
-          Swal.fire(
-            "Error!",
-            "Failed to delete donation request. Try again later.",
-            "error"
-          );
-        }
-      }
-    });
-  };
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -98,9 +62,7 @@ const AllDonationRequests = () => {
 
   return (
     <div className="lg:ml-64 lg:p-6 flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-6">All Blood Donation Requests</h1>
-
-      {/* Filter */}
+      <h1 className="text-3xl font-bold mb-6 text-center">All Blood Donation Requests</h1>
       <div className="mb-4">
         <label htmlFor="filter" className="mr-2">
           Filter by status:
@@ -131,7 +93,6 @@ const AllDonationRequests = () => {
               <th className="py-2 px-4 border-b">Date & Time</th>
               <th className="py-2 px-4 border-b">Blood Group</th>
               <th className="py-2 px-4 border-b">Status</th>
-              <th className="py-2 px-4 border-b">Actions</th>
             </tr>
           </thead>
           <tbody className="text-center">
@@ -170,26 +131,6 @@ const AllDonationRequests = () => {
                       </div>
                     )}
                   </td>
-                  <td className="flex flex-col items-center gap-2 py-2 px-4 border-b">
-                    <Link
-                      to={`/dashboard/edit-my-donation-request/${donation._id}`}
-                      className="text-red-900"
-                    >
-                      <FaRegEdit />
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(donation._id)}
-                      className="text-red-900"
-                    >
-                      <RiDeleteBin6Line />
-                    </button>
-                    <Link
-                      to={`/dashboard/view-my-donation-request/${donation._id}`}
-                      className="text-red-900"
-                    >
-                      <GrView />
-                    </Link>
-                  </td>
                 </tr>
               ))
             ) : (
@@ -225,4 +166,4 @@ const AllDonationRequests = () => {
   );
 };
 
-export default AllDonationRequests;
+export default AllDonationRequestsVolunteer;

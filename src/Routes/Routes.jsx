@@ -24,6 +24,8 @@ import AddBlog from "../Pages/Dashboard/AdminDashboard/AddBlog";
 import Blog from "../Pages/Blog/Blog";
 import BlogDetails from "../Pages/Blog/BlogDetails";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import AllDonationWrapper from "../Pages/Dashboard/AllDonationWrapper/AllDonationWrapper";
+import PrivateVolunteer from "./PrivateVolunteer";
 
 export const router = createBrowserRouter([
   {
@@ -94,14 +96,14 @@ export const router = createBrowserRouter([
         element: <PrivateRoute><EditDonationRequest></EditDonationRequest></PrivateRoute>
       },
 
-      // admin related routes
+      // admin and volunteer related routes
       {
         path: "/dashboard/all-users",
         element: <PrivateRoute><PrivateAdmin><AllUsers></AllUsers></PrivateAdmin></PrivateRoute>
       },
       {
         path: "/dashboard/all-blood-donation-request",
-        element: <PrivateRoute><PrivateAdmin><AllDonationRequests></AllDonationRequests></PrivateAdmin></PrivateRoute>
+        element: <PrivateRoute><AllDonationWrapper></AllDonationWrapper></PrivateRoute>
       },
       {
         path: "/dashboard/content-management",
@@ -111,6 +113,8 @@ export const router = createBrowserRouter([
         path: "/dashboard/content-management/add-blog",
         element: <PrivateRoute><PrivateAdmin><AddBlog></AddBlog></PrivateAdmin></PrivateRoute>
       },
+
+
     ]
   }
 ]);

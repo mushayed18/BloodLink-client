@@ -1,6 +1,6 @@
 const VolunteerDashboard = ({userInfo}) => {
     return (
-        <div>
+        <div className="md:p-6 lg:ml-64">
             This is VolunteerDashboard
         </div>
     );
