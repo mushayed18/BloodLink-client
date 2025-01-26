@@ -71,6 +71,18 @@ const Dashboard = () => {
               All donation requests
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/dashboard/content-management"
+              className={({ isActive }) =>
+                `block px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                  isActive ? "bg-red-950" : ""
+                }`
+              }
+            >
+              Content Management
+            </NavLink>
+          </li>
           {/* Add more admin-specific links here */}
         </ul>
       </nav>

@@ -19,6 +19,8 @@ import PrivateAdmin from "./PrivateAdmin";
 import AllUsers from "../Pages/Dashboard/AdminDashboard/AllUsers";
 import PrivateSign from "./PrivateSign";
 import AllDonationRequests from "../Pages/Dashboard/AdminDashboard/AllDonationRequests";
+import ContentManagement from "../Pages/Dashboard/AdminDashboard/ContentManagement";
+import AddBlog from "../Pages/Dashboard/AdminDashboard/AddBlog";
 
 export const router = createBrowserRouter([
   {
@@ -88,6 +90,14 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/all-blood-donation-request",
         element: <PrivateRoute><PrivateAdmin><AllDonationRequests></AllDonationRequests></PrivateAdmin></PrivateRoute>
+      },
+      {
+        path: "/dashboard/content-management",
+        element: <PrivateRoute><PrivateAdmin><ContentManagement></ContentManagement></PrivateAdmin></PrivateRoute>
+      },
+      {
+        path: "/dashboard/content-management/add-blog",
+        element: <PrivateRoute><PrivateAdmin><AddBlog></AddBlog></PrivateAdmin></PrivateRoute>
       },
     ]
   }
