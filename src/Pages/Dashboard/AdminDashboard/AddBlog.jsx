@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import JoditEditor from "jodit-react";
+import { Helmet } from "react-helmet-async";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -67,6 +68,9 @@ const AddBlog = () => {
 
   return (
     <div className="lg:ml-64 lg:p-6">
+      <Helmet>
+        <title>Create Blog | Blood Link</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-4">Create Blog</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

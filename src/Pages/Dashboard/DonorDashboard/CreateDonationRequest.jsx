@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 
 const CreateDonationRequest = ({ userInfo }) => {
   const [upazilas, setUpazilas] = useState([]);
@@ -102,6 +103,9 @@ const CreateDonationRequest = ({ userInfo }) => {
     <>
       {userInfo.status === "blocked" ? (
         <div className="min-h-screen lg:ml-64 flex items-center justify-center">
+          <Helmet>
+            <title>Create Donation | Blood Link</title>
+          </Helmet>
           <p className="text-center font-bold text-3xl">
             You don't have the permission to create any donation request! Please
             contact with the admin.
@@ -109,6 +113,9 @@ const CreateDonationRequest = ({ userInfo }) => {
         </div>
       ) : (
         <div className="lg:ml-64 p-6 bg-white shadow-md rounded-md">
+          <Helmet>
+            <title>Create Donation | Blood Link</title>
+          </Helmet>
           <h1 className="font-bold text-4xl py-10 text-center">
             Create Donation Request
           </h1>

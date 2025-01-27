@@ -1,3 +1,5 @@
+import { Helmet } from "react-helmet-async";
+
 const ContactUs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -5,6 +7,9 @@ const ContactUs = () => {
 
   return (
     <div className="bg-gray-50 py-12 px-6 lg:px-20">
+      <Helmet>
+        <title>Home | Blood Link</title>
+      </Helmet>
       <div className="text-center mb-10">
         <h2 className="text-3xl md:text-4xl font-bold text-red-900 mb-4">
           Contact Us

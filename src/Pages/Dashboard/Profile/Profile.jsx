@@ -5,6 +5,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import { Helmet } from "react-helmet-async";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -119,13 +120,11 @@ const Profile = () => {
         upazila,
       };
 
-      // Update the user in the database
       await axios.put(`http://localhost:5000/users/${email}`, updatedUserData);
 
       toast.success("User profile updated successfully!");
-      setUserInfo(updatedUserData); // Update local state
-      setIsEditable(false); // Make form non-editable
-      // navigate('/');
+      setUserInfo(updatedUserData); 
+      setIsEditable(false); 
     } catch (error) {
       console.error("Error updating user profile:", error);
       toast.error("Failed to update profile. Please try again.");
@@ -136,6 +135,9 @@ const Profile = () => {
 
   return (
     <div className="lg:ml-64 lg:w-3/4 p-6 md:rounded-r-lg shadow-2xl backdrop-blur-2xl dark:bg-white/30 bg-slate-200">
+      <Helmet>
+        <title>Profile | Blood Link</title>
+      </Helmet>
       <div className="flex items-center justify-between">
         <h1 className="font-bold text-4xl py-10">Profile</h1>
         <button

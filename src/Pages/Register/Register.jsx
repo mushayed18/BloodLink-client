@@ -7,6 +7,7 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { Helmet } from "react-helmet-async";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -165,6 +166,9 @@ const Register = () => {
 
   return (
     <div className="animate__animated animate__fadeInDown flex flex-col md:flex-row justify-center w-11/12 mx-auto">
+      <Helmet>
+        <title>Register | Blood Link</title>
+      </Helmet>
       <div className="bg-gradient-to-r from-red-900 to-red-700 md:w-2/5 lg:w-1/4 mt-28 md:mb-16 md:rounded-l-lg flex items-center justify-center">
         <h1 className="text-3xl font-bold text-white py-4">Register now!</h1>
       </div>

@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { GrView } from "react-icons/gr";
+import { Helmet } from "react-helmet-async";
 
 const DonorDashboard = ({ userInfo }) => {
   const [selectedRequest, setSelectedRequest] = useState(null);
@@ -86,6 +87,9 @@ const DonorDashboard = ({ userInfo }) => {
 
   return (
     <div className="md:p-6 lg:ml-64 flex flex-col items-center">
+      <Helmet>
+        <title>Dashboard Home | Blood Link</title>
+      </Helmet>
       <h1 className="text-3xl font-bold mb-6">Welcome, {userInfo.name}!</h1>
 
       {recentDonations && recentDonations.length > 0 && (

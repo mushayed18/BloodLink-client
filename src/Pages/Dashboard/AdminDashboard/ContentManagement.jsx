@@ -6,6 +6,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const ContentManagement = ({userInfo}) => {
   const [statusFilter, setStatusFilter] = useState("");
@@ -70,6 +71,9 @@ const ContentManagement = ({userInfo}) => {
 
   return (
     <div className="lg:ml-64 lg:p-6">
+      <Helmet>
+        <title>Content Management | Blood Link</title>
+      </Helmet>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Content Management</h1>
         <NavLink

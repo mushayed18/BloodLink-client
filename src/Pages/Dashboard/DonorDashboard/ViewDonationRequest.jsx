@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loading from "../../../Components/Loading";
+import { Helmet } from "react-helmet-async";
 
 const ViewDonationRequest = () => {
   const { id } = useParams();
@@ -20,6 +21,9 @@ const ViewDonationRequest = () => {
 
   return (
     <div className="lg:ml-64 p-6">
+      <Helmet>
+        <title>View Donation Requests | Blood Link</title>
+      </Helmet>
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Donation Request Details</h1>
       <div className="bg-white shadow-md rounded-lg p-6">
         <p className="mb-4"><strong className="text-gray-700">Requester Name:</strong> {donationRequest.requesterName}</p>

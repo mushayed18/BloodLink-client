@@ -5,6 +5,7 @@ import { Menu } from "@headlessui/react";
 import Loading from "../../../Components/Loading";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const AllUsers = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,6 +44,9 @@ const AllUsers = () => {
 
   return (
     <div className="min-h-screen lg:ml-64 flex flex-col mt-8">
+      <Helmet>
+        <title>All Users | Blood Link</title>
+      </Helmet>
       <div className="mb-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold">All Users</h1>
         <select

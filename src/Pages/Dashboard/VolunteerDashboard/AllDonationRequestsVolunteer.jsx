@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Loading from "../../../Components/Loading";
+import { Helmet } from "react-helmet-async";
 
 const AllDonationRequestsVolunteer = () => {
   const { user } = useContext(AuthContext);
@@ -62,6 +63,9 @@ const AllDonationRequestsVolunteer = () => {
 
   return (
     <div className="lg:ml-64 lg:p-6 flex flex-col items-center">
+      <Helmet>
+        <title>All Donation Requests | Blood Link</title>
+      </Helmet>
       <h1 className="text-3xl font-bold mb-6 text-center">All Blood Donation Requests</h1>
       <div className="mb-4">
         <label htmlFor="filter" className="mr-2">

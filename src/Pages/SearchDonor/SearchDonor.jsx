@@ -3,6 +3,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import DonorCard from "./DonorCard";
 import { FiSearch } from "react-icons/fi";
+import { Helmet } from "react-helmet-async";
 
 const SearchDonor = () => {
   const [upazilas, setUpazilas] = useState([]);
@@ -93,6 +94,9 @@ const SearchDonor = () => {
 
   return (
     <div className="min-h-screen mt-28 p-6">
+      <Helmet>
+        <title>Search Donor | Blood Link</title>
+      </Helmet>
       <h1 className="text-4xl font-bold text-center mb-6">Search Donors</h1>
       <form
         onSubmit={handleSearch}

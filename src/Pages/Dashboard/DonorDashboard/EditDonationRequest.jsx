@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import Loading from "../../../Components/Loading";
+import { Helmet } from "react-helmet-async";
 
 const EditDonationRequest = () => {
   const { id } = useParams();
@@ -74,6 +75,9 @@ const EditDonationRequest = () => {
 
   return (
     <div className="lg:ml-64 p-6">
+      <Helmet>
+        <title>Edit Donation Requests | Blood Link</title>
+      </Helmet>
       <h1 className="text-3xl font-bold mb-6 text-gray-800">
         Edit Donation Request
       </h1>

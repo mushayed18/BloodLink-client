@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../Components/Loading";
 import { AuthContext } from "../../Providers/AuthProvider";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const DonationRequestDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,6 +59,9 @@ const DonationRequestDetails = () => {
 
   return (
     <div className="min-h-screen md:p-6 mt-20 flex items-center justify-center">
+      <Helmet>
+        <title>Donation Requests Details | Blood Link</title>
+      </Helmet>
       <div className="my-8 md:my-0 border-2 rounded-lg p-10 md:p-20 w-11/12 lg:w-1/2">
         <h1 className="text-center text-3xl font-bold mb-6">
           Donation Request Details
