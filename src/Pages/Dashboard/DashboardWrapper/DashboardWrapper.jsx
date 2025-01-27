@@ -3,9 +3,8 @@ import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import axios from "axios";
 import Loading from "../../../Components/Loading";
-import AdminDashboard from "../AdminDashboard/AdminDashboard";
 import DonorDashboard from "../DonorDashboard/DonorDashboard";
-import VolunteerDashboard from "../VolunteerDashboard/VolunteerDashboard";
+import SharedDashboardHome from "../SharedDashboardHome/SharedDashboardHome";
 
 const DashboardWrapper = () => {
     const {user} = useContext(AuthContext);
@@ -24,7 +23,7 @@ const DashboardWrapper = () => {
 
     switch (userInfo.role) {
         case 'admin':
-            return <AdminDashboard userInfo={userInfo}></AdminDashboard>
+            return <SharedDashboardHome userInfo={userInfo}></SharedDashboardHome>
             break;
     
         case 'donor':
@@ -32,7 +31,7 @@ const DashboardWrapper = () => {
             break;
     
         case 'volunteer':
-            return <VolunteerDashboard userInfo={userInfo}></VolunteerDashboard>
+            return <SharedDashboardHome userInfo={userInfo}></SharedDashboardHome>
             break;
     }
 };

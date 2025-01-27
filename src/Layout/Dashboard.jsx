@@ -1,10 +1,19 @@
 import { useContext, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaBars,
+  FaHandHoldingWater,
+  FaTimes,
+  FaUserEdit,
+  FaUsers,
+} from "react-icons/fa";
 import { Toaster } from "react-hot-toast";
 import { AuthContext } from "../Providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { IoCreateSharp, IoHomeOutline } from "react-icons/io5";
+import { MdContentPasteSearch, MdOutlineBloodtype } from "react-icons/md";
+import { TbLogin } from "react-icons/tb";
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -39,23 +48,60 @@ const Dashboard = () => {
             <NavLink
               to="/dashboard"
               className={({ isActive }) =>
-                `block px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
-                  isActive ? "bg-red-950" : ""
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                  isActive ? "bg-red-900 text-white" : ""
                 }`
               }
             >
+              <IoHomeOutline />
               Dashboard Home
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/dashboard/all-users"
+              to="/dashboard/profile"
               className={({ isActive }) =>
-                `block px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
-                  isActive ? "bg-red-950" : ""
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                  isActive ? "bg-red-900" : ""
                 }`
               }
             >
+              <FaUserEdit />
+              Profile
+            </NavLink>
+          </li>
+          <NavLink
+            to="/dashboard/create-donation-request"
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                isActive ? "bg-red-900" : ""
+              }`
+            }
+          >
+            <IoCreateSharp />
+            Create Donation Request
+          </NavLink>
+          <NavLink
+            to="/dashboard/my-donation-requests"
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                isActive ? "bg-red-900" : ""
+              }`
+            }
+          >
+            <FaHandHoldingWater />
+            My Donation Requests
+          </NavLink>
+          <li>
+            <NavLink
+              to="/dashboard/all-users"
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                  isActive ? "bg-red-900 text-white" : ""
+                }`
+              }
+            >
+              <FaUsers />
               All users
             </NavLink>
           </li>
@@ -63,11 +109,12 @@ const Dashboard = () => {
             <NavLink
               to="/dashboard/all-blood-donation-request"
               className={({ isActive }) =>
-                `block px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
-                  isActive ? "bg-red-950" : ""
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                  isActive ? "bg-red-900 text-white" : ""
                 }`
               }
             >
+              <MdOutlineBloodtype />
               All donation requests
             </NavLink>
           </li>
@@ -75,15 +122,15 @@ const Dashboard = () => {
             <NavLink
               to="/dashboard/content-management"
               className={({ isActive }) =>
-                `block px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
-                  isActive ? "bg-red-950" : ""
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                  isActive ? "bg-red-900 text-white" : ""
                 }`
               }
             >
+              <MdContentPasteSearch />
               Content Management
             </NavLink>
           </li>
-          {/* Add more admin-specific links here */}
         </ul>
       </nav>
     </>
@@ -97,23 +144,60 @@ const Dashboard = () => {
             <NavLink
               to="/dashboard"
               className={({ isActive }) =>
-                `block px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
-                  isActive ? "bg-red-950" : ""
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                  isActive ? "bg-red-900 text-white" : ""
                 }`
               }
             >
+              <IoHomeOutline />
               Dashboard Home
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/dashboard/all-blood-donation-request"
+              to="/dashboard/profile"
               className={({ isActive }) =>
-                `block px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
-                  isActive ? "bg-red-950" : ""
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                  isActive ? "bg-red-900" : ""
                 }`
               }
             >
+              <FaUserEdit />
+              Profile
+            </NavLink>
+          </li>
+          <NavLink
+            to="/dashboard/create-donation-request"
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                isActive ? "bg-red-900" : ""
+              }`
+            }
+          >
+            <IoCreateSharp />
+            Create Donation Request
+          </NavLink>
+          <NavLink
+            to="/dashboard/my-donation-requests"
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                isActive ? "bg-red-900" : ""
+              }`
+            }
+          >
+            <FaHandHoldingWater />
+            My Donation Requests
+          </NavLink>
+          <li>
+            <NavLink
+              to="/dashboard/all-blood-donation-request"
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                  isActive ? "bg-red-900 text-white" : ""
+                }`
+              }
+            >
+              <MdOutlineBloodtype />
               All donation requests
             </NavLink>
           </li>
@@ -121,15 +205,15 @@ const Dashboard = () => {
             <NavLink
               to="/dashboard/content-management"
               className={({ isActive }) =>
-                `block px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
-                  isActive ? "bg-red-950" : ""
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                  isActive ? "bg-red-900 text-white" : ""
                 }`
               }
             >
+              <MdContentPasteSearch />
               Content Management
             </NavLink>
           </li>
-          {/* Add more volunteer-specific links here */}
         </ul>
       </nav>
     </>
@@ -143,11 +227,12 @@ const Dashboard = () => {
             <NavLink
               to="/dashboard"
               className={({ isActive }) =>
-                `block px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
-                  isActive ? "bg-red-950 text-white" : ""
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                  isActive ? "bg-red-900 text-white" : ""
                 }`
               }
             >
+              <IoHomeOutline />
               Dashboard Home
             </NavLink>
           </li>
@@ -155,11 +240,12 @@ const Dashboard = () => {
             <NavLink
               to="/dashboard/profile"
               className={({ isActive }) =>
-                `block px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
                   isActive ? "bg-red-900" : ""
                 }`
               }
             >
+              <FaUserEdit />
               Profile
             </NavLink>
           </li>
@@ -167,15 +253,26 @@ const Dashboard = () => {
             <NavLink
               to="/dashboard/create-donation-request"
               className={({ isActive }) =>
-                `block px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
                   isActive ? "bg-red-900" : ""
                 }`
               }
             >
+              <IoCreateSharp />
               Create Donation Request
             </NavLink>
           </li>
-          {/* Add more donor-specific links here */}
+          <NavLink
+            to="/dashboard/my-donation-requests"
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-4 py-2 hover:bg-red-700 text-black hover:text-white ${
+                isActive ? "bg-red-900" : ""
+              }`
+            }
+          >
+            <FaHandHoldingWater />
+            My Donation Requests
+          </NavLink>
         </ul>
       </nav>
     </>
@@ -214,11 +311,12 @@ const Dashboard = () => {
             <NavLink
               to="/"
               className={({ isActive }) =>
-                `block px-4 py-2 hover:bg-red-700 hover:text-white text-black ${
+                `flex items-center gap-3 px-4 py-2 hover:bg-red-700 hover:text-white text-black ${
                   isActive ? "bg-red-900" : ""
                 }`
               }
             >
+              <TbLogin />
               Back Home
             </NavLink>
           </li>

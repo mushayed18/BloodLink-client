@@ -20,7 +20,7 @@ const PrivateDonor = ({children}) => {
         return <Loading></Loading>;
     }
 
-    if (userInfo.role === 'donor') {
+    if (userInfo.role === 'donor' || userInfo.role === 'admin' || userInfo.role === 'volunteer') {
         return React.cloneElement(children, { userInfo });
     }
 

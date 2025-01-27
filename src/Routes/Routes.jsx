@@ -114,8 +114,6 @@ export const router = createBrowserRouter([
         path: "/dashboard/content-management/add-blog",
         element: <PrivateRoute><PrivateContent><AddBlog></AddBlog></PrivateContent></PrivateRoute>
       },
-
-
     ]
   }
 ]);
