@@ -22,30 +22,31 @@ const MyDonationRequests = () => {
     queryKey: ["donationRequests", user.email, currentPage, filter],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/donation-requests/${user.email}`,
+        `https://blood-link-server-five.vercel.app/donation-requests/${user.email}`,
         {
           params: {
             page: currentPage,
             limit: itemsPerPage,
-            filter: filter === "all" ? undefined : filter, 
+            filter: filter === "all" ? undefined : filter,
           },
         }
       );
-      return response.data; 
+      return response.data;
     },
-    keepPreviousData: true, 
+    keepPreviousData: true,
   });
 
   const handleStatusChange = async (requestId, newStatus) => {
     try {
       await axios.patch(
-        `http://localhost:5000/donation-requests/${requestId}/status`,
+        `https://blood-link-server-five.vercel.app/donation-requests/${requestId}/status`,
         { status: newStatus }
       );
-      toast.success('Donation status has been updated!');
-      refetch(); 
+      toast.success("Donation status has been updated!");
+      refetch();
     } catch (error) {
-      console.error("Error updating status:", error);
+      {
+      }
     }
   };
 
@@ -62,14 +63,14 @@ const MyDonationRequests = () => {
       if (result.isConfirmed) {
         try {
           await axios.delete(
-            `http://localhost:5000/donation-requests/${requestId}`
+            `https://blood-link-server-five.vercel.app/donation-requests/${requestId}`
           );
           Swal.fire(
             "Deleted!",
             "Your donation request has been deleted.",
             "success"
           );
-          refetch(); 
+          refetch();
         } catch (error) {
           Swal.fire(
             "Error!",
@@ -114,7 +115,7 @@ const MyDonationRequests = () => {
           value={filter}
           onChange={(e) => {
             setFilter(e.target.value);
-            setCurrentPage(1); 
+            setCurrentPage(1);
           }}
           className="border rounded p-1"
         >
@@ -142,10 +143,13 @@ const MyDonationRequests = () => {
             {requests.length > 0 ? (
               requests.map((donation) => (
                 <tr key={donation._id}>
-                  <td className="py-2 px-4 border-b">{donation.recipientName}</td>
+                  <td className="py-2 px-4 border-b">
+                    {donation.recipientName}
+                  </td>
                   <td className="py-2 px-4 border-b">{`${donation.recipientDistrict}, ${donation.recipientUpazila}`}</td>
                   <td className="py-2 px-4 border-b">
-                    {formatDate(donation.donationDate)} at {donation.donationTime}
+                    {formatDate(donation.donationDate)} at{" "}
+                    {donation.donationTime}
                   </td>
                   <td className="py-2 px-4 border-b">{donation.bloodGroup}</td>
                   <td className="py-2 px-4 border-b">
@@ -153,13 +157,17 @@ const MyDonationRequests = () => {
                     {donation.donationStatus === "inprogress" && (
                       <div className="mt-2 flex">
                         <button
-                          onClick={() => handleStatusChange(donation._id, "done")}
+                          onClick={() =>
+                            handleStatusChange(donation._id, "done")
+                          }
                           className="btn btn-sm bg-red-900 hover:bg-red-700 text-white rounded-lg"
                         >
                           Done
                         </button>
                         <button
-                          onClick={() => handleStatusChange(donation._id, "canceled")}
+                          onClick={() =>
+                            handleStatusChange(donation._id, "canceled")
+                          }
                           className="btn btn-sm bg-slate-400 hover:bg-white text-black rounded-lg"
                         >
                           Cancel

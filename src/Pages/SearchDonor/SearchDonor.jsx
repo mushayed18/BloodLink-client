@@ -69,13 +69,16 @@ const SearchDonor = () => {
   } = useQuery({
     queryKey: ["donors", searchCriteria],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/donors", {
-        params: {
-          bloodGroup: searchCriteria.bloodGroup,
-          district: searchCriteria.district,
-          upazila: searchCriteria.upazila,
-        },
-      });
+      const response = await axios.get(
+        "https://blood-link-server-five.vercel.app/donors",
+        {
+          params: {
+            bloodGroup: searchCriteria.bloodGroup,
+            district: searchCriteria.district,
+            upazila: searchCriteria.upazila,
+          },
+        }
+      );
 
       if (response.data.success) {
         return response.data.donors;

@@ -33,7 +33,7 @@ const Dashboard = () => {
     queryKey: ["userData", user?.email],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/users/${user.email}`
+        `https://blood-link-server-five.vercel.app/users/${user.email}`
       );
       return response.data;
     },

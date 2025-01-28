@@ -22,7 +22,7 @@ const AllDonationRequests = () => {
     queryKey: ["donationRequests", user.email, currentPage, filter],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/all-donation-requests`,
+        `https://blood-link-server-five.vercel.app/all-donation-requests`,
         {
           params: {
             page: currentPage,
@@ -39,13 +39,14 @@ const AllDonationRequests = () => {
   const handleStatusChange = async (requestId, newStatus) => {
     try {
       await axios.patch(
-        `http://localhost:5000/donation-requests/${requestId}/status`,
+        `https://blood-link-server-five.vercel.app/donation-requests/${requestId}/status`,
         { status: newStatus }
       );
       toast.success("Donation status has been updated!");
       refetch();
     } catch (error) {
-      console.error("Error updating status:", error);
+      {
+      }
     }
   };
 
@@ -62,7 +63,7 @@ const AllDonationRequests = () => {
       if (result.isConfirmed) {
         try {
           await axios.delete(
-            `http://localhost:5000/donation-requests/${requestId}`
+            `https://blood-link-server-five.vercel.app/donation-requests/${requestId}`
           );
           Swal.fire(
             "Deleted!",

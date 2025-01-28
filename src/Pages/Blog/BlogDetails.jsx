@@ -9,7 +9,9 @@ const BlogDetails = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["blogDetails", id],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/blogs/${id}`);
+      const res = await axios.get(
+        `https://blood-link-server-five.vercel.app/blogs/${id}`
+      );
       return res.data.blog;
     },
   });

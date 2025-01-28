@@ -11,9 +11,10 @@ const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Profile = () => {
-  const { updateUserProfile, user, loading, setLoading } = useContext(AuthContext);
+  const { updateUserProfile, user, loading, setLoading } =
+    useContext(AuthContext);
   const [upazilas, setUpazilas] = useState([]);
-  const [isEditable, setIsEditable] = useState(false); 
+  const [isEditable, setIsEditable] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
@@ -40,11 +41,12 @@ const Profile = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/users/${user?.email}`
+          `https://blood-link-server-five.vercel.app/users/${user?.email}`
         );
         setUserInfo(response.data);
       } catch (error) {
-        console.error("Failed to fetch user details:", error);
+        {
+        }
       }
     };
 
@@ -77,7 +79,9 @@ const Profile = () => {
     const districtObject = districts.find(
       (district) => district.id === districtId
     );
-    const districtName = districtObject ? districtObject.name : userInfo.district;
+    const districtName = districtObject
+      ? districtObject.name
+      : userInfo.district;
 
     if (!districtName) {
       toast.error("Invalid district selected!");
@@ -91,7 +95,12 @@ const Profile = () => {
 
       // Upload photo if a new photo is selected
       if (photoFile) {
-        const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+        const allowedTypes = [
+          "image/jpeg",
+          "image/png",
+          "image/gif",
+          "image/webp",
+        ];
         if (!allowedTypes.includes(photoFile.type)) {
           toast.error("Only image files (JPEG, PNG, GIF, WebP) are allowed!");
           return;
@@ -99,9 +108,13 @@ const Profile = () => {
 
         const photoData = new FormData();
         photoData.append("image", photoFile);
-        const uploadResponse = await axiosPublic.post(image_hosting_api, photoData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+        const uploadResponse = await axiosPublic.post(
+          image_hosting_api,
+          photoData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
         photoURL = uploadResponse.data.data.url;
       }
 
@@ -120,16 +133,18 @@ const Profile = () => {
         upazila,
       };
 
-      await axios.put(`http://localhost:5000/users/${email}`, updatedUserData);
+      await axios.put(
+        `https://blood-link-server-five.vercel.app/users/${email}`,
+        updatedUserData
+      );
 
       toast.success("User profile updated successfully!");
-      setUserInfo(updatedUserData); 
-      setIsEditable(false); 
+      setUserInfo(updatedUserData);
+      setIsEditable(false);
     } catch (error) {
-      console.error("Error updating user profile:", error);
       toast.error("Failed to update profile. Please try again.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -192,7 +207,9 @@ const Profile = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Blood Group: {userInfo.bloodGroup}</label>
+          <label className="block text-sm font-medium">
+            Blood Group: {userInfo.bloodGroup}
+          </label>
           <select
             name="bloodGroup"
             className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-red-900"
@@ -211,7 +228,9 @@ const Profile = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium">District: {userInfo.district}</label>
+          <label className="block text-sm font-medium">
+            District: {userInfo.district}
+          </label>
           <select
             name="district"
             onChange={handleDistrictChange}
@@ -228,7 +247,9 @@ const Profile = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium">Upazila: {userInfo.upazila}</label>
+          <label className="block text-sm font-medium">
+            Upazila: {userInfo.upazila}
+          </label>
           <select
             name="upazila"
             className="w-full px-4 py-2 mt-1 border-b-2 border-gray-400 bg-transparent focus:outline-none focus:border-red-900"

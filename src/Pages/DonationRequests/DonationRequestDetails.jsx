@@ -20,7 +20,7 @@ const DonationRequestDetails = () => {
     queryKey: ["donationRequest", id],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/donation-request/${id}`
+        `https://blood-link-server-five.vercel.app/donation-request/${id}`
       );
       return response.data;
     },
@@ -29,7 +29,7 @@ const DonationRequestDetails = () => {
   const handleDonate = async () => {
     try {
       await axios.patch(
-        `http://localhost:5000/donation-requests/${id}/status`,
+        `https://blood-link-server-five.vercel.app/donation-requests/${id}/status`,
         {
           status: "inprogress",
           donorName: user?.displayName,
@@ -41,7 +41,8 @@ const DonationRequestDetails = () => {
       setIsModalOpen(false);
       navigate("/blood-donation-requests");
     } catch (error) {
-      console.error("Error updating donation status:", error);
+      {
+      }
     }
   };
 

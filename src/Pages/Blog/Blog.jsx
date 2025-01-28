@@ -13,9 +13,12 @@ const Blog = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["publishedBlogs", currentPage],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/published-blogs", {
-        params: { page: currentPage, limit },
-      });
+      const res = await axios.get(
+        "https://blood-link-server-five.vercel.app/published-blogs",
+        {
+          params: { page: currentPage, limit },
+        }
+      );
       return res.data;
     },
     keepPreviousData: true,

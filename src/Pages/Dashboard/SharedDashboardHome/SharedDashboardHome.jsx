@@ -10,7 +10,9 @@ const SharedDashboardHome = ({ userInfo }) => {
   const { data: totalDonors = 0, isLoading: donorsLoading } = useQuery({
     queryKey: ["totalDonors"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/total-donors");
+      const response = await axios.get(
+        "https://blood-link-server-five.vercel.app/total-donors"
+      );
       return response.data.total;
     },
   });
@@ -20,7 +22,7 @@ const SharedDashboardHome = ({ userInfo }) => {
     queryKey: ["totalRequests"],
     queryFn: async () => {
       const response = await axios.get(
-        "http://localhost:5000/total-donation-requests"
+        "https://blood-link-server-five.vercel.app/total-donation-requests"
       );
       return response.data.total;
     },

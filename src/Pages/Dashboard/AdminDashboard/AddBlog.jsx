@@ -21,7 +21,7 @@ const AddBlog = () => {
     if (file) {
       const formData = new FormData();
       formData.append("image", file);
-      
+
       try {
         setIsLoading(true);
         const response = await axios.post(image_hosting_api, formData, {
@@ -52,13 +52,16 @@ const AddBlog = () => {
         title,
         content,
         thumbnail,
-        status: "draft", 
+        status: "draft",
       };
 
-      await axios.post("http://localhost:5000/blogs", blogData);
+      await axios.post(
+        "https://blood-link-server-five.vercel.app/blogs",
+        blogData
+      );
 
       toast.success("Blog created successfully!");
-      navigate('/dashboard/content-management');
+      navigate("/dashboard/content-management");
     } catch (error) {
       toast.error("Failed to create the blog. Please try again.");
     } finally {

@@ -8,7 +8,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 
-const ContentManagement = ({userInfo}) => {
+const ContentManagement = ({ userInfo }) => {
   const [statusFilter, setStatusFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 6;
@@ -18,13 +18,16 @@ const ContentManagement = ({userInfo}) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["blogs", { status: statusFilter, page: currentPage }],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/blogs`, {
-        params: {
-          status: statusFilter || undefined,
-          page: currentPage,
-          limit,
-        },
-      });
+      const res = await axios.get(
+        `https://blood-link-server-five.vercel.app/blogs`,
+        {
+          params: {
+            status: statusFilter || undefined,
+            page: currentPage,
+            limit,
+          },
+        }
+      );
       return res.data;
     },
     keepPreviousData: true,
@@ -32,9 +35,12 @@ const ContentManagement = ({userInfo}) => {
 
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }) => {
-      const res = await axios.put(`http://localhost:5000/blog-status/${id}`, {
-        status,
-      });
+      const res = await axios.put(
+        `https://blood-link-server-five.vercel.app/blog-status/${id}`,
+        {
+          status,
+        }
+      );
       return res.data;
     },
     onSuccess: () => {
@@ -59,7 +65,9 @@ const ContentManagement = ({userInfo}) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:5000/blogs/${id}`);
+          await axios.delete(
+            `https://blood-link-server-five.vercel.app/blogs/${id}`
+          );
           queryClient.invalidateQueries(["blogs"]);
           toast.success("Blog deleted successfully");
         } catch (error) {

@@ -7,7 +7,7 @@ BloodLink is a web platform designed to connect blood donors with recipients in 
 - **Password**: Admin10  
 
 ## Live Site URL
-has not deployed yet
+https://blood-link-8297e.web.app/
 
 ---
 

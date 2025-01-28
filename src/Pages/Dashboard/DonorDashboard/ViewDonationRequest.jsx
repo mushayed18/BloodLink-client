@@ -10,7 +10,9 @@ const ViewDonationRequest = () => {
   const { data: donationRequest, isLoading } = useQuery({
     queryKey: ["donationRequest", id],
     queryFn: async () => {
-      const response = await axios.get(`http://localhost:5000/donation-request/${id}`);
+      const response = await axios.get(
+        `https://blood-link-server-five.vercel.app/donation-request/${id}`
+      );
       return response.data;
     },
   });
@@ -24,20 +26,51 @@ const ViewDonationRequest = () => {
       <Helmet>
         <title>View Donation Requests | Blood Link</title>
       </Helmet>
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Donation Request Details</h1>
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">
+        Donation Request Details
+      </h1>
       <div className="bg-white shadow-md rounded-lg p-6">
-        <p className="mb-4"><strong className="text-gray-700">Requester Name:</strong> {donationRequest.requesterName}</p>
-        <p className="mb-4"><strong className="text-gray-700">Requester Email:</strong> {donationRequest.requesterEmail}</p>
-        <p className="mb-4"><strong className="text-gray-700">Recipient Name:</strong> {donationRequest.recipientName}</p>
         <p className="mb-4">
-          <strong className="text-gray-700">Location:</strong> {donationRequest.recipientDistrict}, {donationRequest.recipientUpazila}
+          <strong className="text-gray-700">Requester Name:</strong>{" "}
+          {donationRequest.requesterName}
         </p>
-        <p className="mb-4"><strong className="text-gray-700">Hospital Name:</strong> {donationRequest.hospitalName}</p>
-        <p className="mb-4"><strong className="text-gray-700">Full Address:</strong> {donationRequest.fullAddress}</p>
-        <p className="mb-4"><strong className="text-gray-700">Blood Group:</strong> {donationRequest.bloodGroup}</p>
-        <p className="mb-4"><strong className="text-gray-700">Donation Date:</strong> {donationRequest.donationDate}</p>
-        <p className="mb-4"><strong className="text-gray-700">Donation Time:</strong> {donationRequest.donationTime}</p>
-        <p className="mb-4"><strong className="text-gray-700">Message:</strong> {donationRequest.requestMessage}</p>
+        <p className="mb-4">
+          <strong className="text-gray-700">Requester Email:</strong>{" "}
+          {donationRequest.requesterEmail}
+        </p>
+        <p className="mb-4">
+          <strong className="text-gray-700">Recipient Name:</strong>{" "}
+          {donationRequest.recipientName}
+        </p>
+        <p className="mb-4">
+          <strong className="text-gray-700">Location:</strong>{" "}
+          {donationRequest.recipientDistrict},{" "}
+          {donationRequest.recipientUpazila}
+        </p>
+        <p className="mb-4">
+          <strong className="text-gray-700">Hospital Name:</strong>{" "}
+          {donationRequest.hospitalName}
+        </p>
+        <p className="mb-4">
+          <strong className="text-gray-700">Full Address:</strong>{" "}
+          {donationRequest.fullAddress}
+        </p>
+        <p className="mb-4">
+          <strong className="text-gray-700">Blood Group:</strong>{" "}
+          {donationRequest.bloodGroup}
+        </p>
+        <p className="mb-4">
+          <strong className="text-gray-700">Donation Date:</strong>{" "}
+          {donationRequest.donationDate}
+        </p>
+        <p className="mb-4">
+          <strong className="text-gray-700">Donation Time:</strong>{" "}
+          {donationRequest.donationTime}
+        </p>
+        <p className="mb-4">
+          <strong className="text-gray-700">Message:</strong>{" "}
+          {donationRequest.requestMessage}
+        </p>
         <p className="mb-4">
           <strong className="text-gray-700">Donation Status:</strong>{" "}
           <span

@@ -14,7 +14,7 @@ const EditDonationRequest = () => {
     queryKey: ["donationRequest", id],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/donation-request/${id}`
+        `https://blood-link-server-five.vercel.app/donation-request/${id}`
       );
       return response.data;
     },
@@ -47,15 +47,13 @@ const EditDonationRequest = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Extract `_id` from formData and create a new object without it
     const { _id, ...updatedData } = formData;
-  
-    console.log("Updated data being sent:", updatedData); // Verify that _id is not included
-  
+
     try {
       const response = await axios.put(
-        `http://localhost:5000/donation-requests/${id}`,
+        `https://blood-link-server-five.vercel.app/donation-requests/${id}`,
         updatedData // Send updated data without _id
       );
       if (response.status === 200) {
@@ -63,11 +61,9 @@ const EditDonationRequest = () => {
         navigate("/dashboard");
       }
     } catch (error) {
-      console.error("Error during update:", error);
       toast.error("Failed to update donation request. Please try again.");
     }
   };
-  
 
   if (isLoading) {
     return <Loading />;

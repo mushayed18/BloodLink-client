@@ -22,9 +22,6 @@ import {
   
     const [gmailAddress, setGmailAddress] = useState("");
 
-    console.log(user);
-    
-  
     const createUser = (email, password) => {
       setLoading(true);
       return createUserWithEmailAndPassword(auth, email, password).finally(() =>
@@ -61,31 +58,6 @@ import {
       const unsubsribe = onAuthStateChanged(auth, (currentUser) => {
         setUser(currentUser);
         setLoading(false);
-  
-        // if (currentUser?.email) {
-        //   const user = { email: currentUser.email };
-  
-        //   axios
-        //     .post("https://marathon-hub-server-two.vercel.app/jwt", user, {
-        //       withCredentials: true,
-        //     })
-        //     .then((res) => {
-        //       setLoading(false);
-        //     });
-        // } else {
-        //   axios
-        //     .post(
-        //       "https://marathon-hub-server-two.vercel.app/logout",
-        //       {},
-        //       {
-        //         withCredentials: true,
-        //       }
-        //     )
-        //     .then((res) => {
-        //       setLoading(false);
-        //     });
-        // }
-
       });
   
       return () => {

@@ -18,7 +18,7 @@ const AllDonationRequestsVolunteer = () => {
     queryKey: ["donationRequests", user.email, currentPage, filter],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/all-donation-requests`,
+        `https://blood-link-server-five.vercel.app/all-donation-requests`,
         {
           params: {
             page: currentPage,
@@ -35,13 +35,14 @@ const AllDonationRequestsVolunteer = () => {
   const handleStatusChange = async (requestId, newStatus) => {
     try {
       await axios.patch(
-        `http://localhost:5000/donation-requests/${requestId}/status`,
+        `https://blood-link-server-five.vercel.app/donation-requests/${requestId}/status`,
         { status: newStatus }
       );
       toast.success("Donation status has been updated!");
       refetch();
     } catch (error) {
-      console.error("Error updating status:", error);
+      {
+      }
     }
   };
 
@@ -66,7 +67,9 @@ const AllDonationRequestsVolunteer = () => {
       <Helmet>
         <title>All Donation Requests | Blood Link</title>
       </Helmet>
-      <h1 className="text-3xl font-bold mb-6 text-center">All Blood Donation Requests</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">
+        All Blood Donation Requests
+      </h1>
       <div className="mb-4">
         <label htmlFor="filter" className="mr-2">
           Filter by status:

@@ -9,7 +9,7 @@ const DonationRequests = () => {
     queryKey: ["pendingDonationRequests"],
     queryFn: async () => {
       const response = await axios.get(
-        "http://localhost:5000/donation-requests-pending"
+        "https://blood-link-server-five.vercel.app/donation-requests-pending"
       );
       return response.data.requests;
     },

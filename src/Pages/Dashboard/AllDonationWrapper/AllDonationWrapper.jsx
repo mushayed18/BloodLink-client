@@ -8,32 +8,33 @@ import AllDonationRequestsVolunteer from "../VolunteerDashboard/AllDonationReque
 import { Navigate } from "react-router-dom";
 
 const AllDonationWrapper = () => {
-    const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-    const {data: userInfo, isLoading} = useQuery({
-        queryKey: ["userInfo"],
-        queryFn: async () => {
-            const response = await axios.get(`http://localhost:5000/users/${user.email}`)
-            return response.data
-        }
-    })
+  const { data: userInfo, isLoading } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: async () => {
+      const response = await axios.get(
+        `https://blood-link-server-five.vercel.app/users/${user.email}`
+      );
+      return response.data;
+    },
+  });
 
-    if(isLoading) {
-        return <Loading></Loading>
-    }
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
-    switch (userInfo.role) {
-        case 'admin':
-            return <AllDonationRequests></AllDonationRequests>
-            break;
-    
-        case 'volunteer':
-            return <AllDonationRequestsVolunteer></AllDonationRequestsVolunteer>
-            break;
+  switch (userInfo.role) {
+    case "admin":
+      return <AllDonationRequests></AllDonationRequests>;
+      break;
 
-    }
+    case "volunteer":
+      return <AllDonationRequestsVolunteer></AllDonationRequestsVolunteer>;
+      break;
+  }
 
-    return <Navigate to={'/login'}></Navigate>
+  return <Navigate to={"/login"}></Navigate>;
 };
 
 export default AllDonationWrapper;

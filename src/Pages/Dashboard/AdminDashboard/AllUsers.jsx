@@ -15,9 +15,12 @@ const AllUsers = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["users", { page: currentPage, status: filterStatus }],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/users", {
-        params: { page: currentPage, limit: 6, status: filterStatus },
-      });
+      const response = await axios.get(
+        "https://blood-link-server-five.vercel.app/users",
+        {
+          params: { page: currentPage, limit: 6, status: filterStatus },
+        }
+      );
       return response.data;
     },
   });
@@ -25,11 +28,13 @@ const AllUsers = () => {
   // Handle updating user role or status
   const handleAction = async (userId, updates) => {
     try {
-      console.log("Updating user:", userId, updates);
-      const response = await axios.put(`http://localhost:5000/user/${userId}`, updates);
+      const response = await axios.put(
+        `https://blood-link-server-five.vercel.app/user/${userId}`,
+        updates
+      );
       if (response.data.success) {
         toast.success("User updated successfully!");
-        refetch(); 
+        refetch();
       } else {
         toast.error("Failed to update user! Please try again");
       }
