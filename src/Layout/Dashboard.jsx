@@ -14,6 +14,7 @@ import axios from "axios";
 import { IoCreateSharp, IoHomeOutline } from "react-icons/io5";
 import { MdContentPasteSearch, MdOutlineBloodtype } from "react-icons/md";
 import { TbLogin } from "react-icons/tb";
+import Loading from "../Components/Loading";
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -279,7 +280,7 @@ const Dashboard = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading></Loading>;
   }
 
   if (error) {

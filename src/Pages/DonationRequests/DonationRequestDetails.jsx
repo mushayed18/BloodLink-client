@@ -89,7 +89,7 @@ const DonationRequestDetails = () => {
             <img
               src={data.requesterImage}
               alt={data.requesterName}
-              className="mt-2 w-10 h-10 rounded-full"
+              className="mt-2 w-10 h-10 rounded-full object-cover"
             />
           </div>
         </div>

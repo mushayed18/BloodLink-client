@@ -3,6 +3,7 @@ import { FaUserFriends, FaTint } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
+import Loading from "../../../Components/Loading";
 
 const SharedDashboardHome = ({ userInfo }) => {
   // Fetch total donors
@@ -41,7 +42,7 @@ const SharedDashboardHome = ({ userInfo }) => {
           <div>
             <h3 className="text-lg font-bold">Total Donors</h3>
             {donorsLoading ? (
-              <p>Loading...</p>
+              <Loading></Loading>
             ) : (
               <p className="text-xl font-semibold">{totalDonors}</p>
             )}
@@ -53,7 +54,7 @@ const SharedDashboardHome = ({ userInfo }) => {
           <div>
             <h3 className="text-lg font-bold">Blood Requests</h3>
             {requestsLoading ? (
-              <p>Loading...</p>
+              <Loading></Loading>
             ) : (
               <p className="text-xl font-semibold">{totalRequests}</p>
             )}

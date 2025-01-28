@@ -131,7 +131,7 @@ const DonorDashboard = ({ userInfo }) => {
                             onClick={() =>
                               handleStatusChange(donation._id, "done")
                             }
-                            className="bg-green-500 text-white px-2 py-1 rounded mr-2"
+                            className="btn btn-sm bg-red-900 hover:bg-red-700 text-white rounded-lg"
                           >
                             Done
                           </button>
@@ -139,7 +139,7 @@ const DonorDashboard = ({ userInfo }) => {
                             onClick={() =>
                               handleStatusChange(donation._id, "canceled")
                             }
-                            className="bg-red-500 text-white px-2 py-1 rounded"
+                            className="btn btn-sm bg-slate-400 hover:bg-white text-black rounded-lg"
                           >
                             Cancel
                           </button>

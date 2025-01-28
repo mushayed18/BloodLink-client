@@ -42,7 +42,7 @@ const DonationCard = ({ request }) => {
       <div className="flex justify-between items-center mt-5">
         <div className="flex items-center gap-2">
             <div className="h-7 w-7 rounded-full">
-                <img className="h-full w-full rounded-full" src={request.requesterImage} alt="Requester image" />
+                <img className="h-full w-full rounded-full object-cover" src={request.requesterImage} alt="Requester image" />
             </div>
             <p className="font-bold text-slate-500">{request.requesterName}</p>
         </div>

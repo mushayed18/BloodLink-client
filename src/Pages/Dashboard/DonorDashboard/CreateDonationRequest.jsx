@@ -3,8 +3,11 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 
 const CreateDonationRequest = ({ userInfo }) => {
+  const navigate = useNavigate();
+
   const [upazilas, setUpazilas] = useState([]);
 
   const { data: districts = [] } = useQuery({
@@ -70,7 +73,7 @@ const CreateDonationRequest = ({ userInfo }) => {
       requesterName: userInfo.name,
       requesterEmail: userInfo.email,
       ...formData,
-      recipientDistrict: selectedDistrict?.name || "", // Use the name, fallback to empty if not found
+      recipientDistrict: selectedDistrict?.name || "", 
       donationStatus: "pending",
     };
 
@@ -92,6 +95,7 @@ const CreateDonationRequest = ({ userInfo }) => {
           donationTime: "",
           requestMessage: "",
         });
+        navigate('/dashboard/my-donation-requests');
       }
     } catch (error) {
       console.error("Error creating donation request:", error);
