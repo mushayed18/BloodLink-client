@@ -61,7 +61,7 @@ const DonorDashboard = ({ userInfo }) => {
             "Your donation request has been deleted.",
             "success"
           );
-          refetch(); // Refresh the recent donations
+          refetch(); 
         } catch (error) {
           Swal.fire(
             "Error!",
